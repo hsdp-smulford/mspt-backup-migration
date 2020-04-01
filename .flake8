@@ -1,0 +1,4 @@
+[flake8]
+exclude = .venv, .mspt-bu-migration
+max-line-length = 120
+ignore = F841
