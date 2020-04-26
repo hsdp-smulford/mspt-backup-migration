@@ -1,0 +1,10 @@
+.venv/
+.git/
+.env.tmpl
+.flake8
+.gitignore
+DOCKER.md
+README.md
+LICENSE
+Dockerfile
+runtime.txt
