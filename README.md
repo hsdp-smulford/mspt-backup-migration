@@ -35,7 +35,7 @@ NOTE: Examples are from a linux/bash shell
 ```bash
 $ > git clone git@github.com:hsdp-smulford/mspt-backup-migration.git
 $ > cd mspt-backup-migration
-$ > git checkout v1.0.0
+$ > git checkout v1.1.0
 ```
 2. Create and populate the `.env` file:
 ```bash
