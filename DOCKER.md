@@ -21,7 +21,8 @@ This can be run as an ephemeral container, or interactively from within the cont
 $ > docker build -t mspt-backup-migration:v1.1.0 .
 ```
 3. Run the container
-The container can be run with simply by
+
+The container can be run with simply by:
 ```bash
 $ > docker run --rm \
     -it mspt-backup-migration:v1.1.0 \
