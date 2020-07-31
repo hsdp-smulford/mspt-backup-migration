@@ -74,18 +74,6 @@ class BackupMigration():
             raise IndexError(msg.format(source=self.source['region'], destination=self.destination['region']))
 
         msg = 'Required attribute was not found; Attribute: {attribute}, Value: {value}'
-        self.clinic_name = os.environ.get('clinic_name', kwargs.get('clinic_name', None))
-        if self.clinic_name:
-            self.logger.log(msg='Discovered Clinic Name: {clinic_name}'.format(clinic_name=self.clinic_name))
-        else:
-            self.logger.log(level='ERROR', msg=msg.format(attribute='source', value=self.clinic_name))
-            raise NameError(msg.format(attribute='source', value=self.clinic_name))
-
-        self.source_key = os.environ.get('source_key', kwargs.get('source_key', None))
-        if self.source_key:
-            self.logger.log(msg='Discovered Source S3 Key: {source_key}'.format(source_key=self.source_key))
-        else:
-            self.logger.log(level='ERROR', msg=msg.format(attribute='source_key', value=self.source_key))
 
         self.debug = os.environ.get('debug', kwargs.get('debug', False))
 
@@ -110,9 +98,8 @@ class BackupMigration():
 
     def list_objects(self):
         self.logger.log(level='DEBUG', msg='Entering BackupMigration.list_objects()')
-        source_key = os.environ.get('source_key', None)
         paginator = self.source_client.get_paginator('list_objects_v2')
-        for page in paginator.paginate(Bucket=self.source['bucket_name'], Prefix=source_key):
+        for page in paginator.paginate(Bucket=self.source['bucket_name']):
             if 'Contents' in page:
                 for object in page['Contents']:
                     if self.debug:
@@ -179,7 +166,7 @@ class BackupMigration():
                     raise ValueError(msg.format(bucket=self.source['bucket_name'], key=key, md5=clean_etag))
 
                 body = response['Body'].read()
-                target = '{}/{}'.format(self.clinic_name, key)
+                target = '{}'.format(key)
                 self.logger.log(level='DEBUG',
                                 msg="Writing Object; Bucket: {}; Key: {}".format(self.destination['bucket_name'],
                                                                                  target))
